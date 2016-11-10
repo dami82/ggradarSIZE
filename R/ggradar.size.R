@@ -69,7 +69,7 @@ function (plot.data,
     #  df: Col 1 -  group ('unique' cluster / group ID of entity)
     #      Col 2-n:  v1.value to vn.value - values (e.g. group/cluser mean or median) of variables v1 to v.n
     #
-    c.idx <- 1:ncol(df)
+    c.idx <- 1:ncol(plot.data)
     c.idx <- c.idx[-c(group_col, weight_col)]
     c.idx <- c(group_col, c.idx)
     df <- data.frm[,c.idx]
