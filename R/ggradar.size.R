@@ -292,9 +292,15 @@ function (plot.data,
   }
   # ... + group points (cluster data)
   if (group.point.size > 0) {
-    base_f <- base_f + geom_point(data=group$path,aes(x=x,y=y,group=group,colour=size),
+    if(!is.null(weight_col)){
+      base_f <- base_f + geom_point(data=group$path,aes(x=x,y=y,group=group,colour=size),
+                                    alpha = linepoint.alpha,
+                                    size=group.point.size)
+    } else {
+        base_f <- base_f + geom_point(data=group$path,aes(x=x,y=y,group=group,colour=group),
                                   alpha = linepoint.alpha,
                                   size=group.point.size)
+    }
   }
   #
   base_f  <- base_f + theme(legend.text=element_text(size=10), legend.title = element_text(size = 12))
