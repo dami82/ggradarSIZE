@@ -1,13 +1,13 @@
 ggradar.size <-
 function (plot.data,
                           group_col = 1,
-                          weight_col = ncol(plot.data),
+                          weight_col = NULL,
                           #
                           # radar limits
-                          grid.mid = 0.18,
-                          grid.max = 0.36,
+                          grid.mid = 0.5,
+                          grid.max = 1.0,
                           grid.min = 0,
-                          values.radar = c("0%", "18%", "36%"),
+                          values.radar = c("0%", "50%", "100%"),
                           #
                           #
                           # legend
