@@ -149,7 +149,11 @@ function (plot.data,
   group <-NULL
   group$path <- CalculateGroupPath(plot.data.offset, group_col = group_col, weight_col = weight_col)
   group$path$size <- sapply(as.numeric(as.character(as.vector(group$path$group))), (function(grp){
-    as.numeric(plot.data[plot.data[,group_col] == grp, "size"])
+     if (!is.null(weight_col)) { 
+       as.numeric(plot.data[plot.data[,group_col] == grp, "size"]) 
+     } else { 
+       0 
+     }
   }))
   #
   #print(group$path)
