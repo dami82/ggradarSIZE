@@ -48,7 +48,7 @@ function (plot.data,
 {
   plot.data[,group_col] <- as.factor(as.character(plot.data[,group_col]))
   names(plot.data)[group_col] <- "group"
-  names(plot.data)[weight_col] <- "size"
+  if (!is.null(weight_col)) { names(plot.data)[weight_col] <- "size" }
   #
   var.names <- colnames(plot.data)[-c(group_col, weight_col)]
   #
@@ -276,14 +276,22 @@ function (plot.data,
   #
   #
   # ... + group (cluster) 'paths'
-  base_f <- base + geom_path(data=group$path,aes(x=x,y=y,group=group,colour=size),
-                             alpha = linepoint.alpha,
-                             size=group.line.width)
-  
+  #
+  if(!is.null(weight_col)){
+    base_f <- base + geom_path(data=group$path,aes(x=x,y=y,group=group,colour=size),
+                               alpha = linepoint.alpha,
+                               size=group.line.width)
+  } else {
+    base_f <- base + geom_path(data=group$path,aes(x=x,y=y,group=group,colour=group),
+                               alpha = linepoint.alpha,
+                               size=group.line.width)
+  }
   # ... + group points (cluster data)
-  base_f <- base_f + geom_point(data=group$path,aes(x=x,y=y,group=group,colour=size),
-                                alpha = linepoint.alpha,
-                                size=group.point.size)
+  if (group.point.size > 0) {
+    base_f <- base_f + geom_point(data=group$path,aes(x=x,y=y,group=group,colour=size),
+                                  alpha = linepoint.alpha,
+                                  size=group.point.size)
+  }
   #
   base_f  <- base_f + theme(legend.text=element_text(size=10), legend.title = element_text(size = 12))
   base_f  <- base_f + theme(plot.title=element_text(size=18, face = "bold"))
